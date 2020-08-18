@@ -23,11 +23,11 @@ public class CartDAO {
             preparedStatement.setString(2, cart.getTime());
             preparedStatement.executeUpdate();
             ResultSet resultSet = idPreparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Integer id = resultSet.getInt(1);
+            if (resultSet.next()) {
+                int id = resultSet.getInt(1);
                 cart.setId(id);
+                return cart;
             }
-            return cart;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -46,23 +46,23 @@ public class CartDAO {
         }
     }
 
-    public static List searchAllCartByUserID(int userID) {
-        String sql = "SELECT * FROM carts WHERE user_id IN(?)";
+    public static Cart searchCartByUserID(int userID) {
+        String sql = "SELECT * FROM carts WHERE user_id=?";
         try (Connection connection = ConnectionToDB.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            ArrayList<Cart> carts = new ArrayList<>();
-            while (resultSet.next()) {
+           Cart cart;
+            if (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String time = resultSet.getString(3);
-                carts.add(new Cart().builder()
+                cart= new Cart().builder()
                         .id(id)
                         .userID(userID)
                         .time(time)
-                        .build());
-                return carts;
-            }
+                        .build();
+                return cart;
+            } else return null;
         } catch (SQLException e) {
             e.printStackTrace();
         }

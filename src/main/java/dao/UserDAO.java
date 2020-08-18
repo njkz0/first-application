@@ -26,8 +26,8 @@ public class UserDAO {
             while (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
                 user.setId(id);
-            }           // peremestit esli ne budet rabotat
-            return user;
+                return user;
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -65,7 +65,7 @@ public class UserDAO {
     }
 
     public static User searchSuchUser(String userLogin) {
-        String sql = "SELECT * FROM users WHERE login IN(?)";
+        String sql = "SELECT * FROM users WHERE login=?";
         try (Connection connection = ConnectionToDB.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userLogin);

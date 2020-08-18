@@ -14,10 +14,10 @@ public class UserService {
         }
     }
 
-    public static int userSignIn(String login, String password) throws IncorrectLogAndPassException {
+    public static User userSignIn(String login, String password) throws IncorrectLogAndPassException {
         User user = UserDAO.searchSuchUser(login);
         if (user != null && user.getPassword().equals(password)) {
-            return 1;
+            return user;
 
         } else {
             throw new IncorrectLogAndPassException("Login and Password incorrect");

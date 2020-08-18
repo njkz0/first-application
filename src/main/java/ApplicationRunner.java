@@ -1,7 +1,9 @@
 import dao.CartDAO;
+import dao.ItemDAO;
 import dao.UserDAO;
 import exception.IncorrectLogAndPassException;
 import model.Cart;
+import model.Item;
 import model.User;
 import service.UserService;
 
@@ -17,6 +19,8 @@ public class ApplicationRunner {
       //  System.out.println(testCart.getUserID());
 //
       //  CartDAO.saveCart(testCart);
-        System.out.println( CartDAO.searchAllCartByUserID(5));
+       // Item test=new Item(0, "IPhone 11", 100000);
+        System.out.println(ItemDAO.searchSuchItem(1).getPrice());
+        ItemDAO.deleteItem(1);
     }
 }
